@@ -762,8 +762,10 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
   if (shouldApply) {
     UIColor *oldBackgroundColor = _backgroundColor;
     _backgroundColor = newBackgroundColor;
+    BOOL resolveWithNodeTraits = ASActivateExperimentalFeature(ASExperimentalResolveBackgroundColorWithNodeTraits);
+    UITraitCollection *traitCollection = resolveWithNodeTraits ? ASPrimitiveTraitCollectionToUITraitCollection(_primitiveTraitCollection) : nil;
     if (_flags.layerBacked) {
-      _layer.backgroundColor = _backgroundColor.CGColor;
+      _layer.backgroundColor = resolveWithNodeTraits ? [_backgroundColor resolvedColorWithTraitCollection:traitCollection].CGColor : _backgroundColor.CGColor;
     } else {
       /*
        NOTE: Setting to the view and layer individually is necessary.
@@ -775,7 +777,7 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
        */
       _view.backgroundColor = _backgroundColor;
       // Gather the CGColorRef from the view incase there are any changes it might apply to which CGColorRef is returned for dynamic colors
-      _layer.backgroundColor = _view.backgroundColor.CGColor;
+      _layer.backgroundColor = resolveWithNodeTraits ? [_backgroundColor resolvedColorWithTraitCollection:traitCollection].CGColor : _view.backgroundColor.CGColor;
     }
 
     if (![oldBackgroundColor isEqual:newBackgroundColor]) {

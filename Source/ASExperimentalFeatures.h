@@ -35,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, ASExperimentalFeatures) {
   ASExperimentalLockTextRendererCache = 1 << 14,                            // exp_lock_text_renderer_cache
   ASExperimentalHierarchyDisplayDidFinishIsRecursive = 1 << 15,             // exp_hierarchy_display_did_finish_is_recursive
   ASExperimentalCheckBatchFetchingOnScroll = 1 << 16,                       // exp_check_batch_fetching_on_scroll
+  ASExperimentalResolveBackgroundColorWithNodeTraits = 1 << 17,             // exp_resolve_background_color_with_node_traits
   ASExperimentalFeatureAll = 0xFFFFFFFF
 };
 
